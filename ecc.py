@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 import getopt
 
@@ -13,7 +14,7 @@ def modInverse(a, n):
    v = 0
    d = 1
    while a > 0 :
-      t = i/a
+      t = i // a
       x = a
       a = i % x
       i = x
@@ -53,7 +54,7 @@ class ECPoint:
       s = ((3 * (self.x * self.x)) + self.ec.a ) * (modInverse(2 * self.y, self.ec.p)) % self.ec.p
       x3 = (s * s - self.x - self.x) % self.ec.p
       y3 = (s * (self.x - x3) - self.y) % self.ec.p
-     
+
       return ECPoint(x3,y3)
 
    def sum(self,p2):
@@ -61,13 +62,13 @@ class ECPoint:
          if self.y == p2.y:
             return self.doublePoint()
          return ECPoint(null, null)
-       
+
       #
-      s  = ((p2.y - self.y) * modInverse(p2.x - self.x + self.ec.p, self.ec.p))  % self.ec.p 
-      x3 = (s**2 - self.x - p2.x        )     % self.ec.p 
-      y3 = (s * (self.x - x3) - self.y  )     % self.ec.p 
+      s  = ((p2.y - self.y) * modInverse(p2.x - self.x + self.ec.p, self.ec.p))  % self.ec.p
+      x3 = (s**2 - self.x - p2.x        )     % self.ec.p
+      y3 = (s * (self.x - x3) - self.y  )     % self.ec.p
       #
-      
+
       return ECPoint(x3,y3)
 
 
@@ -75,13 +76,13 @@ class ECPoint:
       nbits = n.bit_length()
       result = ECPoint(self.x,self.y) # t<-a
 
-      #  
+      #
       for i in range (1, nbits):
         result = result.doublePoint() # t = t + a mod p
         bit = ( n >> (nbits-i-1) ) & 1
         if bit == 1:
           result=result.sum(self)
-      #  
+      #
 
       return result;
 
@@ -89,42 +90,42 @@ class ECPoint:
       return ECPoint(self.x, -self.y + ECcurve().p)
 
 def main():
-  p1 = ECPoint(int("188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012",16),int("07192B95FFC8DA78631011ED6B24CDD573F977A11E794811", 16))
-  print hex(p1.doublePoint().x)
-  print hex(p1.doublePoint().y)
-  p2 = p1.doublePoint()
-  p3 = p2.sum(p1)
+   p1 = ECPoint(int("188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012",16),int("07192B95FFC8DA78631011ED6B24CDD573F977A11E794811", 16))
+
+   print(hex(p1.doublePoint().x))
+   print(hex(p1.doublePoint().y))
+   p2 = p1.doublePoint()
+   p3 = p2.sum(p1)
 
 
-  print "p1+p1+p1"
-  print hex(p2.sum(p1).x)
-  print hex(p2.sum(p1).y)
+   print("p1+p1+p1")
+   print(hex(p2.sum(p1).x))
+   print(hex(p2.sum(p1).y))
 
-  print "3*p1"
-  print hex(p1.multiplyPointByScalar(3).x)
-  print hex(p1.multiplyPointByScalar(3).y)
+   print("3*p1")
+   print(hex(p1.multiplyPointByScalar(3).x))
+   print(hex(p1.multiplyPointByScalar(3).y))
 
-  print "p1+p1+p1+p1"
-  print hex(p3.sum(p1).x)
-  print hex(p3.sum(p1).y)
+   print("p1+p1+p1+p1")
+   print(hex(p3.sum(p1).x))
+   print(hex(p3.sum(p1).y))
 
-  print "4*p1"
-  print hex(p1.multiplyPointByScalar(4).x)
-  print hex(p1.multiplyPointByScalar(4).y)
+   print("4*p1")
+   print(hex(p1.multiplyPointByScalar(4).x))
+   print(hex(p1.multiplyPointByScalar(4).y))
 
-  print "5*p1"
-  print hex(p1.multiplyPointByScalar(5).x)
-  print hex(p1.multiplyPointByScalar(5).y)
+   print("5*p1")
+   print(hex(p1.multiplyPointByScalar(5).x))
+   print(hex(p1.multiplyPointByScalar(5).y))
 
-  print "6*p1"
-  print hex(p1.multiplyPointByScalar(6).x)
-  print hex(p1.multiplyPointByScalar(6).y)
+   print("6*p1")
+   print(hex(p1.multiplyPointByScalar(6).x))
+   print(hex(p1.multiplyPointByScalar(6).y))
 
-  print "7*p1"
-  print hex(p1.multiplyPointByScalar(7).x)
-  print hex(p1.multiplyPointByScalar(7).y)
+   print("7*p1")
+   print(hex(p1.multiplyPointByScalar(7).x))
+   print(hex(p1.multiplyPointByScalar(7).y))
 
 
 if __name__ == "__main__":
     main()
-

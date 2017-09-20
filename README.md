@@ -1,4 +1,4 @@
-# EC-Schnorr
+# EC-Schnorr for Python3
 This project is a python implementation of the Schnorr Zero-Knowledge Protocol over Elliptic Curves.
 
 - ecc.py is a Python class that implements the Elliptic Curve operations needed;
