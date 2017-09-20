@@ -2,12 +2,12 @@
 This project is a python implementation of the Schnorr Zero-Knowledge Protocol over Elliptic Curves.
 
 - ecc.py is a Python class that implements the Elliptic Curve operations needed;
-- schnorr.py implements the Schnorr Zero-Knowledge Protocol over.
+- schnorr_old.py implements the Schnorr Zero-Knowledge Protocol over.
 
 This project uses the following modules: sys, getopt, sys, PyCrypto, and socket.
 
 
-Usage: ./schnorr.py [OPTION]... [ARGS]...
+Usage: ./schnorr_old.py [OPTION]... [ARGS]...
 
 Authenticates someone using Schnorr Protocol over Elliptic Curves.   
 Shows this message if none of options is used.  
@@ -23,7 +23,7 @@ Usage example:
 
 Keypair Generation:
 ```
-mmeruje@mycomputer:~/$ ./schnorr.py -gk
+mmeruje@mycomputer:~/$ ./schnorr_old.py -gk
 *  Key Generation Mode Activated
 *  Generating an a random number. (Private Key)
 *  Generating an elliptic curve point. (Public Key)
@@ -36,9 +36,9 @@ v(-,y) = 2306444403712286640989713776754269629962048798612334189144
 
 Run Authenticator (Server):
 ```
-mmeruje@server:~/$ ./schnorr.py -a 241010344193812168014432711399629693373018093471884903517 2306444403712286640989713776754269629962048798612334189144
+mmeruje@server:~/$ ./schnorr_old.py -a 241010344193812168014432711399629693373018093471884903517 2306444403712286640989713776754269629962048798612334189144
 ```
 Run Supplicant (Client)
 ```
-mmeruje@client:~/$ ./schnorr.py -s 1742413906660797398263574261320583321084828220183690165741
+mmeruje@client:~/$ ./schnorr_old.py -s 1742413906660797398263574261320583321084828220183690165741
 ```
