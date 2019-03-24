@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 import sys
 import ecc
 import Crypto.Util.number
 from binascii import hexlify, unhexlify
 from hashlib import sha224
-
 
 p = ecc.ECcurve().p
 q = ecc.ECcurve().q
@@ -22,7 +20,7 @@ def _int2hex(i, b=byte):
 
 # --bytes HEX to INT
 def _hex2int(i):
-        return int.from_bytes(unhexlify(i.encode('utf8')), 'big')
+    return int.from_bytes(unhexlify(i.encode('utf8')), 'big')
 
 
 # --2element to hex
@@ -32,12 +30,12 @@ def _ele2hex(e):
 
 # --hex to 2element
 def _hex2ele(h):
-    return _hex2int(h[:byte*2]), _hex2int(h[byte*2:])
+    return _hex2int(h[:byte * 2]), _hex2int(h[byte * 2:])
 
 
 # --get_private_key
 def get_private_key():
-    a = Crypto.Util.number.getRandomRange(0, (q-1))
+    a = Crypto.Util.number.getRandomRange(0, (q - 1))
     return _int2hex(a)
 
 
@@ -52,15 +50,14 @@ def get_public_key(private_key):
 
 # --sign message
 def sign(message, private_key):
-    ec= ecc.ECcurve()
-    r = Crypto.Util.number.getRandomRange(0, (q-1))
+    ec = ecc.ECcurve()
+    r = Crypto.Util.number.getRandomRange(0, (q - 1))
     x = ecc.ECPoint(ec.xi, ec.yi)
     x = x.multiplyPointByScalar(r)
 
     # generates e
     # e = Crypto.Util.number.getRandomRange(0, 2**80)
     e = int.from_bytes(sha224(message).digest(), 'big') % dataSize
-
     """ calculate Y """
     y = _hex2int(private_key) * e + r
 
@@ -75,16 +72,15 @@ def verify(message, x_y, public_key):
     v = v.multiplyPointByScalar(e)
 
     # calculate z
-    ec= ecc.ECcurve()
+    ec = ecc.ECcurve()
     z = ecc.ECPoint(ec.xi, ec.yi)
-    z = z.multiplyPointByScalar(_hex2int(x_y[byte*4:]))
+    z = z.multiplyPointByScalar(_hex2int(x_y[byte * 4:]))
     z = z.sum(v)
 
-
     # verify z e x
-    xx, xy = _hex2ele(x_y[:byte*4])
+    xx, xy = _hex2ele(x_y[:byte * 4])
     if z.x == xx and z.y == xy:
-         return True
+        return True
     else:
         return False
 
@@ -106,4 +102,4 @@ if __name__ == "__main__":
         print("xy", xy)
         if not verify(message, xy, pub):
             exit(1)
-    print((time.time()-t) / 60)
+    print((time.time() - t) / 60)
